@@ -1,0 +1,227 @@
+{
+  "scenario_id": "structuring",
+  "seeded_pattern": {
+    "type": "structuring",
+    "accounts": [
+      "ACC301",
+      "ACC101",
+      "ACC102",
+      "ACC103",
+      "ACC104",
+      "ACC105",
+      "ACC106"
+    ]
+  },
+  "transactions": [
+    {
+      "from_account": "ACC004",
+      "to_account": "ACC002",
+      "amount": 88000,
+      "timestamp": "2026-06-01T12:27:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC006",
+      "to_account": "ACC001",
+      "amount": 12000,
+      "timestamp": "2026-06-01T20:34:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC006",
+      "to_account": "ACC009",
+      "amount": 60000,
+      "timestamp": "2026-06-02T14:42:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC003",
+      "to_account": "ACC010",
+      "amount": 18500,
+      "timestamp": "2026-06-05T03:31:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC101",
+      "to_account": "ACC301",
+      "amount": 42000,
+      "timestamp": "2026-06-05T09:00:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC102",
+      "to_account": "ACC301",
+      "amount": 38000,
+      "timestamp": "2026-06-05T15:00:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC103",
+      "to_account": "ACC301",
+      "amount": 45000,
+      "timestamp": "2026-06-05T21:00:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC104",
+      "to_account": "ACC301",
+      "amount": 41000,
+      "timestamp": "2026-06-06T03:00:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC105",
+      "to_account": "ACC301",
+      "amount": 47000,
+      "timestamp": "2026-06-06T09:00:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC106",
+      "to_account": "ACC301",
+      "amount": 39000,
+      "timestamp": "2026-06-06T15:00:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC301",
+      "to_account": "ACC302",
+      "amount": 252000,
+      "timestamp": "2026-06-07T07:00:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC004",
+      "to_account": "ACC012",
+      "amount": 75000,
+      "timestamp": "2026-06-07T21:11:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC001",
+      "to_account": "ACC007",
+      "amount": 31000,
+      "timestamp": "2026-06-07T23:01:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC008",
+      "to_account": "ACC012",
+      "amount": 12000,
+      "timestamp": "2026-06-08T01:19:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC009",
+      "to_account": "ACC004",
+      "amount": 88000,
+      "timestamp": "2026-06-08T17:14:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC011",
+      "to_account": "ACC003",
+      "amount": 25000,
+      "timestamp": "2026-06-09T07:00:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC009",
+      "to_account": "ACC002",
+      "amount": 25000,
+      "timestamp": "2026-06-09T12:23:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC012",
+      "to_account": "ACC013",
+      "amount": 31000,
+      "timestamp": "2026-06-10T03:57:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC012",
+      "to_account": "ACC014",
+      "amount": 5400,
+      "timestamp": "2026-06-10T18:25:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC013",
+      "to_account": "ACC008",
+      "amount": 88000,
+      "timestamp": "2026-06-11T12:50:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC011",
+      "to_account": "ACC002",
+      "amount": 25000,
+      "timestamp": "2026-06-11T23:55:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC010",
+      "to_account": "ACC013",
+      "amount": 12000,
+      "timestamp": "2026-06-12T14:17:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC006",
+      "to_account": "ACC004",
+      "amount": 31000,
+      "timestamp": "2026-06-13T14:18:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC009",
+      "to_account": "ACC007",
+      "amount": 5400,
+      "timestamp": "2026-06-14T01:30:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC015",
+      "to_account": "ACC001",
+      "amount": 75000,
+      "timestamp": "2026-06-14T17:59:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC007",
+      "to_account": "ACC009",
+      "amount": 60000,
+      "timestamp": "2026-06-14T18:22:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC009",
+      "to_account": "ACC007",
+      "amount": 110000,
+      "timestamp": "2026-06-14T21:12:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC005",
+      "to_account": "ACC015",
+      "amount": 5400,
+      "timestamp": "2026-06-15T15:54:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC013",
+      "to_account": "ACC004",
+      "amount": 110000,
+      "timestamp": "2026-06-15T17:14:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC005",
+      "to_account": "ACC002",
+      "amount": 60000,
+      "timestamp": "2026-06-15T23:45:00",
+      "currency": "INR"
+    }
+  ]
+}

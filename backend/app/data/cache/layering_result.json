@@ -1,0 +1,436 @@
+{
+  "scenario_id": "layering",
+  "accounts": [
+    {
+      "id": "ACC014",
+      "total_in": 113000.0,
+      "total_out": 66000.0,
+      "transaction_count": 5,
+      "unique_counterparties": 3,
+      "risk_score": null,
+      "confidence": null,
+      "flags": []
+    },
+    {
+      "id": "ACC015",
+      "total_in": 244000.0,
+      "total_out": 286000.0,
+      "transaction_count": 7,
+      "unique_counterparties": 5,
+      "risk_score": null,
+      "confidence": null,
+      "flags": []
+    },
+    {
+      "id": "ACC401",
+      "total_in": 0,
+      "total_out": 120000.0,
+      "transaction_count": 1,
+      "unique_counterparties": 1,
+      "risk_score": 68,
+      "confidence": "medium",
+      "flags": [
+        "layering"
+      ]
+    },
+    {
+      "id": "ACC402",
+      "total_in": 120000.0,
+      "total_out": 114000.0,
+      "transaction_count": 2,
+      "unique_counterparties": 2,
+      "risk_score": 68,
+      "confidence": "medium",
+      "flags": [
+        "layering"
+      ]
+    },
+    {
+      "id": "ACC004",
+      "total_in": 0,
+      "total_out": 12000.0,
+      "transaction_count": 1,
+      "unique_counterparties": 1,
+      "risk_score": null,
+      "confidence": null,
+      "flags": []
+    },
+    {
+      "id": "ACC006",
+      "total_in": 105400.0,
+      "total_out": 113000.0,
+      "transaction_count": 5,
+      "unique_counterparties": 3,
+      "risk_score": null,
+      "confidence": null,
+      "flags": []
+    },
+    {
+      "id": "ACC007",
+      "total_in": 152000.0,
+      "total_out": 110000.0,
+      "transaction_count": 3,
+      "unique_counterparties": 3,
+      "risk_score": null,
+      "confidence": null,
+      "flags": []
+    },
+    {
+      "id": "ACC403",
+      "total_in": 114000.0,
+      "total_out": 108000.0,
+      "transaction_count": 2,
+      "unique_counterparties": 2,
+      "risk_score": 68,
+      "confidence": "medium",
+      "flags": [
+        "layering"
+      ]
+    },
+    {
+      "id": "ACC404",
+      "total_in": 108000.0,
+      "total_out": 102000.0,
+      "transaction_count": 2,
+      "unique_counterparties": 2,
+      "risk_score": 68,
+      "confidence": "medium",
+      "flags": [
+        "layering"
+      ]
+    },
+    {
+      "id": "ACC012",
+      "total_in": 0,
+      "total_out": 110000.0,
+      "transaction_count": 1,
+      "unique_counterparties": 1,
+      "risk_score": null,
+      "confidence": null,
+      "flags": []
+    },
+    {
+      "id": "ACC008",
+      "total_in": 350000.0,
+      "total_out": 42000.0,
+      "transaction_count": 5,
+      "unique_counterparties": 4,
+      "risk_score": null,
+      "confidence": null,
+      "flags": []
+    },
+    {
+      "id": "ACC405",
+      "total_in": 102000.0,
+      "total_out": 96000.0,
+      "transaction_count": 2,
+      "unique_counterparties": 2,
+      "risk_score": 68,
+      "confidence": "medium",
+      "flags": [
+        "layering"
+      ]
+    },
+    {
+      "id": "ACC406",
+      "total_in": 96000.0,
+      "total_out": 0,
+      "transaction_count": 1,
+      "unique_counterparties": 1,
+      "risk_score": 68,
+      "confidence": "medium",
+      "flags": [
+        "layering"
+      ]
+    },
+    {
+      "id": "ACC003",
+      "total_in": 130000.0,
+      "total_out": 110000.0,
+      "transaction_count": 3,
+      "unique_counterparties": 2,
+      "risk_score": null,
+      "confidence": null,
+      "flags": []
+    },
+    {
+      "id": "ACC013",
+      "total_in": 60000.0,
+      "total_out": 42000.0,
+      "transaction_count": 2,
+      "unique_counterparties": 2,
+      "risk_score": null,
+      "confidence": null,
+      "flags": []
+    },
+    {
+      "id": "ACC009",
+      "total_in": 240000.0,
+      "total_out": 263400.0,
+      "transaction_count": 7,
+      "unique_counterparties": 5,
+      "risk_score": null,
+      "confidence": null,
+      "flags": []
+    },
+    {
+      "id": "ACC011",
+      "total_in": 0,
+      "total_out": 110000.0,
+      "transaction_count": 1,
+      "unique_counterparties": 1,
+      "risk_score": null,
+      "confidence": null,
+      "flags": []
+    },
+    {
+      "id": "ACC002",
+      "total_in": 0,
+      "total_out": 5400.0,
+      "transaction_count": 1,
+      "unique_counterparties": 1,
+      "risk_score": null,
+      "confidence": null,
+      "flags": []
+    },
+    {
+      "id": "ACC001",
+      "total_in": 10800.0,
+      "total_out": 88000.0,
+      "transaction_count": 3,
+      "unique_counterparties": 3,
+      "risk_score": null,
+      "confidence": null,
+      "flags": []
+    },
+    {
+      "id": "ACC010",
+      "total_in": 0,
+      "total_out": 47400.0,
+      "transaction_count": 2,
+      "unique_counterparties": 2,
+      "risk_score": null,
+      "confidence": null,
+      "flags": []
+    }
+  ],
+  "transactions": [
+    {
+      "from_account": "ACC014",
+      "to_account": "ACC015",
+      "amount": 12000.0,
+      "timestamp": "2026-06-02T02:23:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC401",
+      "to_account": "ACC402",
+      "amount": 120000.0,
+      "timestamp": "2026-06-03T08:00:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC004",
+      "to_account": "ACC015",
+      "amount": 12000.0,
+      "timestamp": "2026-06-03T10:11:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC006",
+      "to_account": "ACC014",
+      "amount": 88000.0,
+      "timestamp": "2026-06-03T12:45:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC007",
+      "to_account": "ACC015",
+      "amount": 110000.0,
+      "timestamp": "2026-06-03T17:11:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC402",
+      "to_account": "ACC403",
+      "amount": 114000.0,
+      "timestamp": "2026-06-03T20:00:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC403",
+      "to_account": "ACC404",
+      "amount": 108000.0,
+      "timestamp": "2026-06-04T09:00:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC012",
+      "to_account": "ACC008",
+      "amount": 110000.0,
+      "timestamp": "2026-06-04T15:17:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC404",
+      "to_account": "ACC405",
+      "amount": 102000.0,
+      "timestamp": "2026-06-04T22:00:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC405",
+      "to_account": "ACC406",
+      "amount": 96000.0,
+      "timestamp": "2026-06-05T11:00:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC014",
+      "to_account": "ACC003",
+      "amount": 42000.0,
+      "timestamp": "2026-06-05T19:13:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC013",
+      "to_account": "ACC008",
+      "amount": 42000.0,
+      "timestamp": "2026-06-05T22:53:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC003",
+      "to_account": "ACC009",
+      "amount": 110000.0,
+      "timestamp": "2026-06-06T16:43:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC011",
+      "to_account": "ACC007",
+      "amount": 110000.0,
+      "timestamp": "2026-06-06T17:59:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC015",
+      "to_account": "ACC008",
+      "amount": 88000.0,
+      "timestamp": "2026-06-06T18:46:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC015",
+      "to_account": "ACC009",
+      "amount": 88000.0,
+      "timestamp": "2026-06-08T21:14:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC015",
+      "to_account": "ACC008",
+      "amount": 110000.0,
+      "timestamp": "2026-06-09T11:42:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC009",
+      "to_account": "ACC015",
+      "amount": 110000.0,
+      "timestamp": "2026-06-09T20:39:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC002",
+      "to_account": "ACC001",
+      "amount": 5400.0,
+      "timestamp": "2026-06-11T01:17:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC010",
+      "to_account": "ACC001",
+      "amount": 5400.0,
+      "timestamp": "2026-06-11T05:27:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC010",
+      "to_account": "ACC007",
+      "amount": 42000.0,
+      "timestamp": "2026-06-12T06:31:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC009",
+      "to_account": "ACC003",
+      "amount": 88000.0,
+      "timestamp": "2026-06-13T13:47:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC009",
+      "to_account": "ACC013",
+      "amount": 60000.0,
+      "timestamp": "2026-06-13T18:22:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC008",
+      "to_account": "ACC009",
+      "amount": 42000.0,
+      "timestamp": "2026-06-15T01:55:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC009",
+      "to_account": "ACC006",
+      "amount": 5400.0,
+      "timestamp": "2026-06-15T02:50:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC014",
+      "to_account": "ACC006",
+      "amount": 12000.0,
+      "timestamp": "2026-06-15T06:47:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC001",
+      "to_account": "ACC006",
+      "amount": 88000.0,
+      "timestamp": "2026-06-15T10:58:00",
+      "currency": "INR"
+    },
+    {
+      "from_account": "ACC006",
+      "to_account": "ACC014",
+      "amount": 25000.0,
+      "timestamp": "2026-06-15T19:17:00",
+      "currency": "INR"
+    }
+  ],
+  "flagged_patterns": [
+    {
+      "pattern_type": "layering",
+      "accounts_involved": [
+        "ACC401",
+        "ACC402",
+        "ACC403",
+        "ACC404",
+        "ACC405",
+        "ACC406"
+      ],
+      "risk_score": 68,
+      "confidence": "medium",
+      "contributing_factors": [
+        "network_density: 6 accounts involved",
+        "velocity: 0.098 tx/hour"
+      ],
+      "reasoning": "Rule engine flagged a layering pattern (LLM unavailable).",
+      "narrative": "A layering pattern was detected involving 6 accounts (ACC401, ACC402, ACC403, ACC404, ACC405, ACC406) across 5 transactions totaling 540,000. Rule engine flagged a layering pattern (LLM unavailable)."
+    }
+  ]
+}
