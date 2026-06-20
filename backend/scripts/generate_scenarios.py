@@ -1,12 +1,3 @@
-"""Generates the 3 synthetic scenario datasets used by the demo.
-
-Each scenario mixes a hand-seeded suspicious pattern (guaranteed to trip the
-rule pre-filters in agent2_detection.py) with randomized ordinary "noise"
-transactions among an unrelated pool of accounts, so detection isn't trivial.
-
-Run: python scripts/generate_scenarios.py
-"""
-
 import json
 import random
 from datetime import datetime, timedelta

@@ -99,8 +99,6 @@ def _find_layering_candidates(transactions: list[Transaction]) -> list[list[Tran
                     seen_signatures.add(signature)
                     chains.append(chain)
 
-    # Drop chains that are just a tail/sub-chain of a longer chain already found,
-    # so a single seeded chain doesn't surface as multiple overlapping flags.
     chains.sort(key=len, reverse=True)
     maximal_chains: list[list[Transaction]] = []
     accepted_signatures: list[tuple[str, ...]] = []
@@ -154,7 +152,6 @@ async def _confirm_with_llm(pattern_type: str, accounts_involved: list[str], txs
     try:
         return await call_llm(SYSTEM_PROMPT, user_prompt)
     except Exception:
-        # Demo-safety: if the LLM is unreachable, trust the rule engine rather than dropping the flag.
         return {"confirmed": True, "reasoning": f"Rule engine flagged a {pattern_type} pattern (LLM unavailable)."}
 
 

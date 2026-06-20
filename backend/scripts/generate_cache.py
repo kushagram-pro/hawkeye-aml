@@ -1,10 +1,3 @@
-"""Pre-generates the cached fallback result for each scenario by running the
-real pipeline once and saving its output. Used as the demo-safety fallback
-when a live pipeline run fails or times out (see orchestrator.py).
-
-Run: python scripts/generate_cache.py
-"""
-
 import asyncio
 import json
 import sys

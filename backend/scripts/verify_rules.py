@@ -1,7 +1,3 @@
-"""Sanity-checks the rule pre-filters against the generated scenarios (no LLM calls).
-Run: python scripts/verify_rules.py
-"""
-
 import json
 import sys
 from pathlib import Path

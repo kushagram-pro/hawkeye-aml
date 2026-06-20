@@ -14,8 +14,6 @@ SCENARIOS_DIR = DATA_DIR / "scenarios"
 CACHE_DIR = DATA_DIR / "cache"
 PIPELINE_TIMEOUT_SECONDS = 55
 
-# In-memory store of the last completed result per scenario, used by the
-# "fetch last result without re-running" endpoint.
 last_results: dict[str, InvestigationGraph] = {}
 
 
@@ -58,8 +56,6 @@ async def _run_pipeline_stages(scenario_id: str) -> AsyncGenerator[PipelineEvent
 
 
 async def run_pipeline(scenario_id: str) -> AsyncGenerator[PipelineEvent, None]:
-    """Runs the 4-agent pipeline, yielding progress events. Falls back to a
-    pre-cached result on failure or timeout so the demo never shows an error."""
     queue: asyncio.Queue[PipelineEvent | None] = asyncio.Queue()
 
     async def produce():

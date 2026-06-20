@@ -2,7 +2,6 @@ from app.schemas import Account, InvestigationGraph, Transaction
 
 
 def ingest(scenario_id: str, raw_transactions: list[dict]) -> InvestigationGraph:
-    """Deterministic normalization: raw transaction records -> account graph with aggregates."""
     transactions = [Transaction(**t) for t in raw_transactions]
 
     accounts: dict[str, Account] = {}

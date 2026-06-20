@@ -46,7 +46,6 @@ async def _call_claude(system_prompt: str, user_prompt: str) -> dict:
 
 
 async def call_llm(system_prompt: str, user_prompt: str) -> dict:
-    """Provider-agnostic JSON-mode LLM call. Switch provider via LLM_PROVIDER=ollama|claude."""
     if PROVIDER == "claude":
         return await _call_claude(system_prompt, user_prompt)
     return await _call_ollama(system_prompt, user_prompt)
