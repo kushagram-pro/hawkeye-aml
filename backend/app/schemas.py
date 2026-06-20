@@ -2,7 +2,10 @@ from typing import Literal, Optional
 
 from pydantic import BaseModel
 
-PatternType = Literal["structuring", "layering", "mule_network"]
+# The four named detectors emit one of these, but the general anomaly detector
+# (app/pipeline/anomaly.py) can mint its own free-form snake_case label for a scam
+# shape none of them cover - so this is a plain str, not a closed Literal.
+PatternType = str
 Confidence = Literal["low", "medium", "high"]
 StageStatus = Literal["started", "completed", "failed"]
 
@@ -34,6 +37,7 @@ class FlaggedPattern(BaseModel):
     contributing_factors: list[str] = []
     reasoning: str = ""
     narrative: str = ""
+    additional_notes: Optional[str] = None
 
 
 class InvestigationGraph(BaseModel):
@@ -41,6 +45,7 @@ class InvestigationGraph(BaseModel):
     accounts: list[Account]
     transactions: list[Transaction]
     flagged_patterns: list[FlaggedPattern] = []
+    executive_summary: Optional[str] = None
 
 
 class PipelineEvent(BaseModel):
@@ -54,3 +59,4 @@ class ScenarioMeta(BaseModel):
     name: str
     description: str
     transaction_count: int
+    deletable: bool = False

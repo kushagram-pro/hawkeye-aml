@@ -1,3 +1,4 @@
+import asyncio
 import statistics
 from datetime import datetime
 
@@ -5,11 +6,19 @@ from app.llm_client import call_llm
 from app.schemas import Account, FlaggedPattern, InvestigationGraph, Transaction
 
 SYSTEM_PROMPT = (
-    "You are an AML risk-scoring engine. Given a confirmed suspicious pattern and its "
-    "underlying risk factors, assign a risk_score from 0-100 and a confidence level. "
-    "Respond with strict JSON: "
+    "You are a risk-scoring and case-writing AI for an AML investigation platform. "
+    "You will be given a CONFIRMED suspicious pattern with the analyst's reasoning and "
+    "its underlying risk factors. Do two things in one pass: "
+    "1. Assign a risk_score (0-100) and confidence level based on severity, not just "
+    "pattern type - a structuring pattern involving 20 accounts and a large sum is "
+    "higher risk than one involving 4 accounts and a small sum. "
+    "2. Write a 2-4 sentence plain-language narrative explaining what happened and why "
+    "it's suspicious, in the style of an experienced fraud investigator's case note. Be "
+    "specific about amounts, account counts, and timing where available. Do not invent "
+    "details not present in the input. "
+    "Respond with strict JSON only: "
     '{"risk_score": <int 0-100>, "confidence": "low"|"medium"|"high", '
-    '"contributing_factors": ["factor: explanation", ...]}'
+    '"contributing_factors": ["factor: explanation", ...], "narrative": "2-4 sentences"}'
 )
 
 
@@ -50,7 +59,17 @@ def _compute_factors(pattern: FlaggedPattern, txs: list[Transaction], accounts_i
     }
 
 
-def _fallback_score(factors: dict) -> dict:
+def _fallback_narrative(pattern: FlaggedPattern, txs: list[Transaction]) -> str:
+    total = sum(t.amount for t in txs)
+    accounts = ", ".join(pattern.accounts_involved)
+    return (
+        f"A {pattern.pattern_type.replace('_', ' ')} pattern was detected involving "
+        f"{len(pattern.accounts_involved)} accounts ({accounts}) across {len(txs)} transactions "
+        f"totaling {total:,.0f}. {pattern.reasoning}"
+    ).strip()
+
+
+def _fallback_score_and_narrative(pattern: FlaggedPattern, factors: dict, txs: list[Transaction]) -> dict:
     score = min(100, int(factors["network_density"] * 8 + factors["velocity_tx_per_hour"] * 10 + 20))
     confidence = "high" if score >= 70 else "medium" if score >= 40 else "low"
     return {
@@ -60,23 +79,39 @@ def _fallback_score(factors: dict) -> dict:
             f"network_density: {factors['network_density']} accounts involved",
             f"velocity: {factors['velocity_tx_per_hour']} tx/hour",
         ],
+        "narrative": _fallback_narrative(pattern, txs),
     }
+
+
+async def _score_and_narrate_one(
+    pattern: FlaggedPattern, txs: list[Transaction], accounts_index: dict[str, Account]
+) -> dict:
+    factors = _compute_factors(pattern, txs, accounts_index)
+    try:
+        result = await call_llm(SYSTEM_PROMPT, f"risk_factors: {factors}")
+        if not result.get("narrative"):
+            result["narrative"] = _fallback_narrative(pattern, txs)
+        return result
+    except Exception:
+        return _fallback_score_and_narrative(pattern, factors, txs)
 
 
 async def score_patterns(graph: InvestigationGraph, patterns: list[FlaggedPattern]) -> list[FlaggedPattern]:
     accounts_index = {a.id: a for a in graph.accounts}
 
-    for pattern in patterns:
-        txs = _pattern_transactions(pattern, graph.transactions)
-        factors = _compute_factors(pattern, txs, accounts_index)
-        try:
-            result = await call_llm(SYSTEM_PROMPT, f"risk_factors: {factors}")
-        except Exception:
-            result = _fallback_score(factors)
+    if not patterns:
+        return patterns
 
+    pattern_txs = [_pattern_transactions(pattern, graph.transactions) for pattern in patterns]
+    results = await asyncio.gather(
+        *(_score_and_narrate_one(pattern, txs, accounts_index) for pattern, txs in zip(patterns, pattern_txs))
+    )
+
+    for pattern, result in zip(patterns, results):
         pattern.risk_score = int(result.get("risk_score", 0))
         pattern.confidence = result.get("confidence", "low")
         pattern.contributing_factors = result.get("contributing_factors", [])
+        pattern.narrative = result.get("narrative", "")
 
         for account_id in pattern.accounts_involved:
             account = accounts_index.get(account_id)

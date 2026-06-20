@@ -2,7 +2,7 @@ import json
 
 from fastapi import APIRouter, HTTPException
 
-from app.pipeline.orchestrator import SCENARIOS_DIR
+from app.pipeline.orchestrator import SCENARIOS_DIR, last_results
 from app.schemas import ScenarioMeta
 
 router = APIRouter()
@@ -31,6 +31,22 @@ def list_scenarios():
                 transaction_count=len(data["transactions"]),
             )
         )
+
+    if SCENARIOS_DIR.exists():
+        for path in sorted(SCENARIOS_DIR.glob("upload-*.json")):
+            scenario_id = path.stem
+            with open(path, encoding="utf-8") as f:
+                data = json.load(f)
+            scenarios.append(
+                ScenarioMeta(
+                    id=scenario_id,
+                    name=data.get("display_name") or f"Uploaded — {scenario_id.removeprefix('upload-')}",
+                    description="Custom transaction set uploaded for this investigation.",
+                    transaction_count=len(data["transactions"]),
+                    deletable=True,
+                )
+            )
+
     return scenarios
 
 
@@ -41,3 +57,17 @@ def get_scenario(scenario_id: str):
         raise HTTPException(status_code=404, detail="Scenario not found")
     with open(path, encoding="utf-8") as f:
         return json.load(f)
+
+
+@router.delete("/scenarios/{scenario_id}")
+def delete_scenario(scenario_id: str):
+    if not scenario_id.startswith("upload-"):
+        raise HTTPException(status_code=400, detail="Only uploaded scenarios can be deleted")
+
+    path = SCENARIOS_DIR / f"{scenario_id}.json"
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="Scenario not found")
+
+    path.unlink()
+    last_results.pop(scenario_id, None)
+    return {"deleted": scenario_id}

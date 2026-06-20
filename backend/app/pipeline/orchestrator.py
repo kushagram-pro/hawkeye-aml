@@ -1,5 +1,6 @@
 import asyncio
 import json
+from collections import Counter
 from collections.abc import AsyncGenerator
 from pathlib import Path
 
@@ -7,6 +8,7 @@ from app.pipeline.agent1_ingestion import ingest
 from app.pipeline.agent2_detection import detect_patterns
 from app.pipeline.agent3_scoring import score_patterns
 from app.pipeline.agent4_narrative import generate_narratives
+from app.pipeline.agent5_summary import generate_executive_summary
 from app.schemas import InvestigationGraph, PipelineEvent
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -34,22 +36,51 @@ async def _run_pipeline_stages(scenario_id: str) -> AsyncGenerator[PipelineEvent
 
     yield PipelineEvent(stage="ingestion", status="started")
     graph = ingest(scenario_id, raw_transactions)
-    yield PipelineEvent(stage="ingestion", status="completed", data={"account_count": len(graph.accounts)})
+    yield PipelineEvent(
+        stage="ingestion",
+        status="completed",
+        data={
+            "account_count": len(graph.accounts),
+            "transaction_count": len(graph.transactions),
+        },
+    )
 
     yield PipelineEvent(stage="pattern_detection", status="started")
     flagged = await detect_patterns(graph)
     graph.flagged_patterns = flagged
     yield PipelineEvent(
-        stage="pattern_detection", status="completed", data={"patterns_found": len(flagged)}
+        stage="pattern_detection",
+        status="completed",
+        data={
+            "patterns_found": len(flagged),
+            "pattern_types": dict(Counter(p.pattern_type for p in flagged)),
+        },
     )
 
     yield PipelineEvent(stage="risk_scoring", status="started")
     graph.flagged_patterns = await score_patterns(graph, graph.flagged_patterns)
-    yield PipelineEvent(stage="risk_scoring", status="completed")
+    scores = [p.risk_score for p in graph.flagged_patterns]
+    yield PipelineEvent(
+        stage="risk_scoring",
+        status="completed",
+        data={
+            "average_risk_score": round(sum(scores) / len(scores), 1) if scores else None,
+            "highest_risk_score": max(scores) if scores else None,
+            "high_confidence_count": sum(1 for p in graph.flagged_patterns if p.confidence == "high"),
+        },
+    )
 
     yield PipelineEvent(stage="narrative", status="started")
     graph.flagged_patterns = await generate_narratives(graph, graph.flagged_patterns)
-    yield PipelineEvent(stage="narrative", status="completed")
+    graph.executive_summary = await generate_executive_summary(graph, graph.flagged_patterns)
+    yield PipelineEvent(
+        stage="narrative",
+        status="completed",
+        data={
+            "narratives_generated": sum(1 for p in graph.flagged_patterns if p.narrative),
+            "executive_summary": graph.executive_summary,
+        },
+    )
 
     last_results[scenario_id] = graph
     yield PipelineEvent(stage="pipeline", status="completed", data=graph.model_dump())
