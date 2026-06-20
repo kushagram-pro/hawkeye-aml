@@ -1,13 +1,9 @@
-INFO:     Started server process [41212]
+INFO:     Started server process [43424]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-INFO:     127.0.0.1:52077 - "GET /health HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58910 - "GET /health HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58913 - "GET /scenarios HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64535 - "POST /investigate/structuring HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54962 - "GET /investigate/structuring/result HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56820 - "POST /investigate/layering HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56827 - "GET /investigate/layering/result HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56828 - "POST /investigate/mule_network HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56835 - "GET /investigate/mule_network/result HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55146 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50981 - "POST /investigate/layering HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52936 - "POST /investigate/structuring HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63706 - "POST /investigate/mule_network HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49892 - "GET /investigate/structuring/result HTTP/1.1" 200 OK

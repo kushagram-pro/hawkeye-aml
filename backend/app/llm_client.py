@@ -25,7 +25,7 @@ async def _call_ollama(system_prompt: str, user_prompt: str) -> dict:
         "stream": False,
         "format": "json",
     }
-    async with httpx.AsyncClient(timeout=30.0) as client:
+    async with httpx.AsyncClient(timeout=60.0) as client:
         resp = await client.post(OLLAMA_URL, json=payload)
         resp.raise_for_status()
         body = resp.json()

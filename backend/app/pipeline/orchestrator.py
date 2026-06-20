@@ -12,7 +12,7 @@ from app.schemas import InvestigationGraph, PipelineEvent
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 SCENARIOS_DIR = DATA_DIR / "scenarios"
 CACHE_DIR = DATA_DIR / "cache"
-PIPELINE_TIMEOUT_SECONDS = 55
+PIPELINE_TIMEOUT_SECONDS = 240
 
 last_results: dict[str, InvestigationGraph] = {}
 
