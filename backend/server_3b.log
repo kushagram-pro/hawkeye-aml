@@ -1,0 +1,30 @@
+INFO:     Started server process [37872]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:52325 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63886 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63888 - "POST /investigate/structuring HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50075 - "OPTIONS /scenarios HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59554 - "OPTIONS /scenarios HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50075 - "GET /scenarios HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:50075 - "GET /scenarios HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:50075 - "OPTIONS /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59554 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59554 - "GET /scenarios HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59554 - "GET /scenarios HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59554 - "OPTIONS /investigate/upload-471cac09 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50075 - "POST /investigate/upload-471cac09 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61602 - "GET /scenarios HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61602 - "OPTIONS /investigate/upload-471cac09/audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61602 - "GET /investigate/upload-471cac09/audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57892 - "OPTIONS /scenarios HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58613 - "OPTIONS /scenarios HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58613 - "GET /scenarios HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58613 - "GET /scenarios HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58613 - "OPTIONS /investigate/upload-471cac09 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57892 - "POST /investigate/upload-471cac09 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57892 - "GET /scenarios HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57892 - "GET /investigate/upload-471cac09/audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58066 - "OPTIONS /investigate/upload-69d79f2a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58066 - "POST /investigate/upload-69d79f2a HTTP/1.1" 200 OK

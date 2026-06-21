@@ -37,7 +37,9 @@ SYSTEM_PROMPT = (
     "2. Explain, in technical terms, exactly why it does or doesn't match. "
     "3. Note any additional suspicious detail visible in the provided transactions "
     "that the rule engine didn't capture (only from the given data - never invent "
-    "accounts or transactions not present in the input). "
+    "accounts or transactions not present in the input). All monetary amounts in this "
+    "data are in Indian Rupees - if you cite any amount, write it as 'Rs. <amount>', "
+    "never '$' or 'USD'. "
     "Respond with strict JSON only: "
     '{"confirmed": true|false, "reasoning": "2-3 sentences", "additional_notes": "string or null"}'
 )
@@ -59,7 +61,9 @@ GENERAL_ANOMALY_SYSTEM_PROMPT = (
     "genuinely different - name the real behavior (e.g. 'shell_company_passthrough', "
     "'wash_trading', 'dormant_account_velocity_spike', 'invoice_fraud_round_amounts'). "
     "3. Explain your reasoning citing the actual signals and transactions given. "
-    "Never invent accounts or transactions not present in the input. "
+    "Never invent accounts or transactions not present in the input. All monetary "
+    "amounts in this data are in Indian Rupees - if you cite any amount, write it as "
+    "'Rs. <amount>', never '$' or 'USD'. "
     "Respond with strict JSON only: "
     '{"confirmed": true|false, "pattern_label": "snake_case_string or null", '
     '"reasoning": "2-3 sentences", "additional_notes": "string or null"}'

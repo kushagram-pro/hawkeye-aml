@@ -15,6 +15,14 @@ function formatStageSummary(key: StageStatus["key"], summary: Record<string, unk
     if (typeof summary.transaction_count === "number") {
       lines.push(`${summary.transaction_count} transactions ingested`);
     }
+  } else if (key === "watchlist") {
+    if (typeof summary.accounts_flagged === "number") {
+      lines.push(
+        summary.accounts_flagged > 0
+          ? `${summary.accounts_flagged} account(s) matched the repeat-offender watchlist`
+          : "No matches against the repeat-offender watchlist"
+      );
+    }
   } else if (key === "detection") {
     const patternsFound = summary.patterns_found;
     if (typeof patternsFound === "number") {
@@ -28,6 +36,17 @@ function formatStageSummary(key: StageStatus["key"], summary: Record<string, unk
           .join(", ")
       );
     }
+  } else if (key === "adversarial") {
+    if (typeof summary.patterns_reviewed === "number") {
+      lines.push(`${summary.patterns_reviewed} candidate(s) put through adversarial review`);
+    }
+    if (typeof summary.patterns_overturned === "number") {
+      lines.push(
+        summary.patterns_overturned > 0
+          ? `${summary.patterns_overturned} overturned as likely false positive(s)`
+          : "0 overturned - all candidates withstood challenge"
+      );
+    }
   } else if (key === "scoring") {
     if (typeof summary.average_risk_score === "number") {
       lines.push(`Average risk score: ${summary.average_risk_score}`);
@@ -37,6 +56,14 @@ function formatStageSummary(key: StageStatus["key"], summary: Record<string, unk
     }
     if (typeof summary.high_confidence_count === "number") {
       lines.push(`${summary.high_confidence_count} high-confidence pattern(s)`);
+    }
+  } else if (key === "memory") {
+    if (typeof summary.patterns_with_precedent === "number") {
+      lines.push(
+        summary.patterns_with_precedent > 0
+          ? `${summary.patterns_with_precedent} pattern(s) matched against prior cases`
+          : "No precedent found in past investigations"
+      );
     }
   } else if (key === "narrative") {
     if (typeof summary.narratives_generated === "number") {

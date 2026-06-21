@@ -67,6 +67,13 @@ export function InsightPanel({ result, selectedNodeId }: InsightPanelProps) {
               <strong>{selectedNode.uniqueCounterparties}</strong>
             </div>
           </div>
+
+          {selectedNode.watchlistNote ? (
+            <div className="status-banner warning watchlist-banner" role="status">
+              <span className="metric-label">Watchlist hit</span>
+              <p>{selectedNode.watchlistNote}</p>
+            </div>
+          ) : null}
         </>
       ) : null}
 
@@ -77,6 +84,9 @@ export function InsightPanel({ result, selectedNodeId }: InsightPanelProps) {
             <span className={`confidence-badge ${confidenceTone(selectedPattern.confidence)}`}>
               {selectedPattern.confidence} confidence
             </span>
+            {selectedPattern.reviewVerdict ? (
+              <span className="review-badge">adversarial review: {selectedPattern.reviewVerdict}</span>
+            ) : null}
           </div>
           <p className="narrative-copy">{selectedPattern.narrative}</p>
           <div className="involved-accounts">
@@ -89,6 +99,35 @@ export function InsightPanel({ result, selectedNodeId }: InsightPanelProps) {
               ))}
             </div>
           </div>
+
+          {selectedPattern.skepticChallenge ? (
+            <div className="insight-subsection">
+              <span className="metric-label">Adversarial review</span>
+              <p className="narrative-copy">{selectedPattern.skepticChallenge}</p>
+            </div>
+          ) : null}
+
+          {selectedPattern.nextSteps && selectedPattern.nextSteps.length > 0 ? (
+            <div className="insight-subsection">
+              <span className="metric-label">Recommended next steps</span>
+              <ul className="stage-summary">
+                {selectedPattern.nextSteps.map((step, index) => (
+                  <li key={index}>{step}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          {selectedPattern.similarPastCases && selectedPattern.similarPastCases.length > 0 ? (
+            <div className="insight-subsection">
+              <span className="metric-label">Case memory</span>
+              <ul className="stage-summary">
+                {selectedPattern.similarPastCases.map((note, index) => (
+                  <li key={index}>{note}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </>
       ) : (
         <p>No suspicious pattern explanation was returned for this investigation.</p>

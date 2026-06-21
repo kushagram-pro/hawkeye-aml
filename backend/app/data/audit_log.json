@@ -1,0 +1,424 @@
+[
+  {
+    "id": "78c45eb6-d624-422c-bcd4-999e625f3d6f",
+    "type": "investigation_run",
+    "scenario_id": "structuring",
+    "timestamp": "2026-06-20T21:45:49.372766+00:00",
+    "summary": "Investigation run on 'structuring': 0 pattern(s) confirmed (none), 1 overturned by adversarial review.",
+    "details": {
+      "account_count": 23,
+      "transaction_count": 30,
+      "patterns_confirmed": 0,
+      "patterns_overturned": 1,
+      "pattern_types": [],
+      "highest_risk_score": null,
+      "elapsed_seconds": 126.2,
+      "executive_summary": "No suspicious patterns were confirmed in this investigation."
+    }
+  },
+  {
+    "id": "d1454eb1-b8d7-46eb-b58f-e78ae2e915a9",
+    "type": "chat_message",
+    "scenario_id": "structuring",
+    "timestamp": "2026-06-20T21:46:12.908044+00:00",
+    "summary": "Analyst asked: \"Summarize this case in one sentence.\"",
+    "details": {
+      "question": "Summarize this case in one sentence.",
+      "answer": "This AML investigation involving 23 accounts and 30 transactions did not confirm any suspicious patterns."
+    }
+  },
+  {
+    "id": "a5bc21d3-cd79-4717-bc4c-d11fb88d80d9",
+    "type": "investigation_run",
+    "scenario_id": "structuring",
+    "timestamp": "2026-06-20T21:49:29.381888+00:00",
+    "summary": "Investigation run on 'structuring': 1 pattern(s) confirmed (structuring), 0 overturned by adversarial review.",
+    "details": {
+      "account_count": 23,
+      "transaction_count": 30,
+      "patterns_confirmed": 1,
+      "patterns_overturned": 0,
+      "pattern_types": [
+        "structuring"
+      ],
+      "highest_risk_score": 85,
+      "elapsed_seconds": 136.8,
+      "executive_summary": "One structuring pattern was confirmed with a high confidence level. Seven accounts totaling $252,000 were involved, and the highest risk score was 85."
+    }
+  },
+  {
+    "id": "99874de3-dbf4-405b-91b8-0d57182ad475",
+    "type": "chat_message",
+    "scenario_id": "structuring",
+    "timestamp": "2026-06-20T21:50:04.776854+00:00",
+    "summary": "Analyst asked: \"What accounts were involved?\"",
+    "details": {
+      "question": "What accounts were involved?",
+      "answer": "Seven accounts were involved in the confirmed structuring pattern: ACC301, ACC101, ACC102, ACC103, ACC104, ACC105, and ACC106."
+    }
+  },
+  {
+    "id": "a05e55ea-36cd-42ad-b00c-6a24c2a7d3a9",
+    "type": "investigation_run",
+    "scenario_id": "upload-06fe7508",
+    "timestamp": "2026-06-20T21:57:22.560548+00:00",
+    "summary": "Investigation run on 'upload-06fe7508': 0 pattern(s) confirmed (none), 0 overturned by adversarial review.",
+    "details": {
+      "account_count": 3,
+      "transaction_count": 2,
+      "patterns_confirmed": 0,
+      "patterns_overturned": 0,
+      "pattern_types": [],
+      "highest_risk_score": null,
+      "elapsed_seconds": 59.4,
+      "executive_summary": "No suspicious patterns were confirmed in this investigation."
+    }
+  },
+  {
+    "id": "5d5a3d15-080c-4e46-a89e-4bebf706a7af",
+    "type": "investigation_run",
+    "scenario_id": "upload-6fe64318",
+    "timestamp": "2026-06-20T21:59:49.201152+00:00",
+    "summary": "Investigation run on 'upload-6fe64318': 0 pattern(s) confirmed (none), 0 overturned by adversarial review.",
+    "details": {
+      "account_count": 3,
+      "transaction_count": 2,
+      "patterns_confirmed": 0,
+      "patterns_overturned": 0,
+      "pattern_types": [],
+      "highest_risk_score": null,
+      "elapsed_seconds": 46.0,
+      "executive_summary": "No suspicious patterns were confirmed in this investigation."
+    }
+  },
+  {
+    "id": "33bb81e9-a6a9-4239-825e-67ed428770f9",
+    "type": "investigation_run",
+    "scenario_id": "layering",
+    "timestamp": "2026-06-21T04:02:50.526361+00:00",
+    "summary": "Investigation run on 'layering': 1 pattern(s) confirmed (layering), 0 overturned by adversarial review.",
+    "details": {
+      "account_count": 20,
+      "transaction_count": 28,
+      "patterns_confirmed": 1,
+      "patterns_overturned": 0,
+      "pattern_types": [
+        "layering"
+      ],
+      "highest_risk_score": 87,
+      "elapsed_seconds": 134.0,
+      "executive_summary": "One layering pattern was confirmed with a high confidence level. Six accounts were involved in total transactions amounting to $540,000, and the highest risk score identified was 87."
+    }
+  },
+  {
+    "id": "850cfef3-fae5-4c58-84fe-fca0917d1437",
+    "type": "chat_message",
+    "scenario_id": "layering",
+    "timestamp": "2026-06-21T04:03:24.712228+00:00",
+    "summary": "Analyst asked: \"Why is this account flagged?\"",
+    "details": {
+      "question": "Why is this account flagged?",
+      "answer": "Account ACC401 is flagged due to its involvement in a confirmed layering pattern with a high confidence level. It has a total outflow of $120,000 and a risk score of 87, indicating significant suspicion for money laundering activities."
+    }
+  },
+  {
+    "id": "7d18ee9d-b1dd-4f2f-9799-fd6b167ca00a",
+    "type": "investigation_run",
+    "scenario_id": "layering",
+    "timestamp": "2026-06-21T04:07:46.667648+00:00",
+    "summary": "Investigation run on 'layering': 1 pattern(s) confirmed (layering), 0 overturned by adversarial review.",
+    "details": {
+      "account_count": 20,
+      "transaction_count": 28,
+      "patterns_confirmed": 1,
+      "patterns_overturned": 0,
+      "pattern_types": [
+        "layering"
+      ],
+      "highest_risk_score": 75,
+      "elapsed_seconds": 119.8,
+      "executive_summary": "One layering pattern was confirmed with a high confidence level involving six accounts and a total amount of $540,000. The highest risk score identified is 75."
+    }
+  },
+  {
+    "id": "d0e95c5f-866d-4954-a2d2-e82e2306e395",
+    "type": "chat_message",
+    "scenario_id": "layering",
+    "timestamp": "2026-06-21T04:08:23.001862+00:00",
+    "summary": "Analyst asked: \"Why is this account flagged?\"",
+    "details": {
+      "question": "Why is this account flagged?",
+      "answer": "Account ACC401 is flagged due to involvement in a layering pattern with a high risk score of 75. The narrative indicates multiple small transactions totaling $90,000 moving from one account to the next, each receiving a reduced amount, which is characteristic of a layering scheme to obscure the origin and flow of funds."
+    }
+  },
+  {
+    "id": "8756593d-6ce2-4d4b-8d56-ab5877756399",
+    "type": "investigation_run",
+    "scenario_id": "upload-b37c06e0",
+    "timestamp": "2026-06-21T04:17:44.523442+00:00",
+    "summary": "Investigation run on 'upload-b37c06e0': 5 pattern(s) confirmed (layering, structuring), 0 overturned by adversarial review.",
+    "details": {
+      "account_count": 113,
+      "transaction_count": 248,
+      "patterns_confirmed": 5,
+      "patterns_overturned": 0,
+      "pattern_types": [
+        "layering",
+        "structuring"
+      ],
+      "highest_risk_score": 85,
+      "elapsed_seconds": 228.1,
+      "executive_summary": "Five patterns of potential money laundering were confirmed, with four involving structuring and one layering. Twenty-six accounts totaling $1,050,809.68 were involved, with the highest risk score being 85."
+    }
+  },
+  {
+    "id": "8a2f2b3b-b85d-4bd7-821e-b9cd5cb6c4b1",
+    "type": "chat_message",
+    "scenario_id": "upload-b37c06e0",
+    "timestamp": "2026-06-21T04:19:46.888035+00:00",
+    "summary": "Analyst asked: \"Which account is at the highest risk and why?\"",
+    "details": {
+      "question": "Which account is at the highest risk and why?",
+      "answer": "I can't reach the reasoning engine right now, so I can't answer that. The case data is still visible in the graph and insight panel above."
+    }
+  },
+  {
+    "id": "7017a93b-8805-4766-af1d-c6f8f50b7462",
+    "type": "chat_message",
+    "scenario_id": "upload-b37c06e0",
+    "timestamp": "2026-06-21T04:40:39.156383+00:00",
+    "summary": "Analyst asked: \"Which account is at the highest risk and why?\"",
+    "details": {
+      "question": "Which account is at the highest risk and why?",
+      "answer": "I can't reach the reasoning engine right now, so I can't answer that. The case data is still visible in the graph and insight panel above."
+    }
+  },
+  {
+    "id": "c0c4f4a8-3f6e-4014-ad87-fcc037de2afa",
+    "type": "chat_message",
+    "scenario_id": "upload-b37c06e0",
+    "timestamp": "2026-06-21T04:44:47.767969+00:00",
+    "summary": "Analyst asked: \"HOW IS ACCOUNT MULE 10 involved?\"",
+    "details": {
+      "question": "HOW IS ACCOUNT MULE 10 involved?",
+      "answer": "I can't reach the reasoning engine right now, so I can't answer that. The case data is still visible in the graph and insight panel above."
+    }
+  },
+  {
+    "id": "d7534369-9b44-4fa4-90da-d5e21d6a9e3b",
+    "type": "chat_message",
+    "scenario_id": "upload-b37c06e0",
+    "timestamp": "2026-06-21T04:55:24.039023+00:00",
+    "summary": "Analyst asked: \"HOW IS ACCOUNT MULE 10 involved?\"",
+    "details": {
+      "question": "HOW IS ACCOUNT MULE 10 involved?",
+      "answer": "I can't reach the reasoning engine right now, so I can't answer that. The case data is still visible in the graph and insight panel above."
+    }
+  },
+  {
+    "id": "089d8fbf-b8a0-4718-9e60-257c66a3f0f7",
+    "type": "investigation_run",
+    "scenario_id": "upload-b37c06e0",
+    "timestamp": "2026-06-21T05:25:47.979174+00:00",
+    "summary": "Investigation run on 'upload-b37c06e0': 4 pattern(s) confirmed (layering, mule_network, structuring), 2 overturned by adversarial review.",
+    "details": {
+      "account_count": 113,
+      "transaction_count": 248,
+      "patterns_confirmed": 4,
+      "patterns_overturned": 2,
+      "pattern_types": [
+        "layering",
+        "mule_network",
+        "structuring"
+      ],
+      "highest_risk_score": 85,
+      "elapsed_seconds": 461.7,
+      "executive_summary": "The investigation confirmed four patterns of potential money laundering activity: three cases of structuring and one case of mule network. A total of 22 accounts were involved with transactions amounting to Rs. 641,063.03, and the highest risk score was 85."
+    }
+  },
+  {
+    "id": "e9268d9e-7b28-4a5c-a142-1ed11afeda49",
+    "type": "chat_message",
+    "scenario_id": "upload-b37c06e0",
+    "timestamp": "2026-06-21T05:27:59.593606+00:00",
+    "summary": "Analyst asked: \"How much money moved through this case in total, and which account is highest risk?\"",
+    "details": {
+      "question": "How much money moved through this case in total, and which account is highest risk?",
+      "answer": "A total of Rs. 641,063.03 was moved through the case. The highest risk score was associated with accounts NOISE-01, NOISE-02, NOISE-04, NOISE-13, and NOISE-21, each with a risk score of 85."
+    }
+  },
+  {
+    "id": "ab2f9ea4-4978-4600-9774-5f85fbdc8f22",
+    "type": "investigation_run",
+    "scenario_id": "structuring",
+    "timestamp": "2026-06-21T05:28:06.621732+00:00",
+    "summary": "Investigation run on 'structuring': 1 pattern(s) confirmed (structuring), 0 overturned by adversarial review.",
+    "details": {
+      "account_count": 23,
+      "transaction_count": 30,
+      "patterns_confirmed": 1,
+      "patterns_overturned": 0,
+      "pattern_types": [
+        "structuring"
+      ],
+      "highest_risk_score": 85,
+      "elapsed_seconds": 537.3,
+      "executive_summary": "One structuring pattern was confirmed with a high confidence level. Seven accounts were involved in an activity totaling Rs. 252,000, and the highest risk score identified was 85."
+    }
+  },
+  {
+    "id": "b6e07b54-f4af-44c3-9b07-8f5fa96fb223",
+    "type": "chat_message",
+    "scenario_id": "structuring",
+    "timestamp": "2026-06-21T05:29:40.959310+00:00",
+    "summary": "Analyst asked: \"how is Account ACC101 involved?\"",
+    "details": {
+      "question": "how is Account ACC101 involved?",
+      "answer": "Account ACC101 is involved in the structuring pattern with a total outflow of Rs. 42,000.0 and a risk score of 85. It contributed to multiple smaller transfers converging on ACC301 from different accounts, as noted in the narrative."
+    }
+  },
+  {
+    "id": "fbd15a60-a4a4-4918-843f-9f3304153e74",
+    "type": "chat_message",
+    "scenario_id": "structuring",
+    "timestamp": "2026-06-21T05:30:16.336221+00:00",
+    "summary": "Analyst asked: \"elaborate on how is Account ACC101 involved?\"",
+    "details": {
+      "question": "elaborate on how is Account ACC101 involved?",
+      "answer": "Account ACC101 is involved in the structuring pattern by making a single transaction of Rs. 42,000 to ACC301. This contributes to multiple smaller transfers converging on ACC301 from different accounts, which is characteristic of structuring activities."
+    }
+  },
+  {
+    "id": "70f60a83-f997-4024-952f-003ee94282cf",
+    "type": "investigation_run",
+    "scenario_id": "structuring",
+    "timestamp": "2026-06-21T05:34:44.616090+00:00",
+    "summary": "Investigation run on 'structuring': 1 pattern(s) confirmed (structuring), 0 overturned by adversarial review.",
+    "details": {
+      "account_count": 23,
+      "transaction_count": 30,
+      "patterns_confirmed": 1,
+      "patterns_overturned": 0,
+      "pattern_types": [
+        "structuring"
+      ],
+      "highest_risk_score": 85,
+      "elapsed_seconds": 125.7,
+      "executive_summary": "One structuring pattern was confirmed with a high confidence level. Seven accounts were involved in an amount of Rs. 252000, and the highest risk score was 85."
+    }
+  },
+  {
+    "id": "7a6227ba-cd88-4024-8b38-f5d9f924a2c6",
+    "type": "investigation_run",
+    "scenario_id": "structuring",
+    "timestamp": "2026-06-21T05:39:02.630062+00:00",
+    "summary": "Investigation run on 'structuring': 1 pattern(s) confirmed (structuring), 0 overturned by adversarial review.",
+    "details": {
+      "account_count": 23,
+      "transaction_count": 30,
+      "patterns_confirmed": 1,
+      "patterns_overturned": 0,
+      "pattern_types": [
+        "structuring"
+      ],
+      "highest_risk_score": 85,
+      "elapsed_seconds": 113.1,
+      "executive_summary": "This investigation identified 1 confirmed pattern(s) (structuring) involving 7 accounts and Rs. 252,000 in flagged transfers. The highest-risk finding scored 85 (high confidence) and warrants priority review."
+    }
+  },
+  {
+    "id": "7fec395e-00c8-465a-9da0-908db62b02b8",
+    "type": "investigation_run",
+    "scenario_id": "structuring",
+    "timestamp": "2026-06-21T05:42:13.212621+00:00",
+    "summary": "Investigation run on 'structuring': 1 pattern(s) confirmed (structuring), 0 overturned by adversarial review.",
+    "details": {
+      "account_count": 23,
+      "transaction_count": 30,
+      "patterns_confirmed": 1,
+      "patterns_overturned": 0,
+      "pattern_types": [
+        "structuring"
+      ],
+      "highest_risk_score": 75,
+      "elapsed_seconds": 103.5,
+      "executive_summary": "This investigation identified 1 confirmed pattern(s) (structuring) involving 7 accounts and Rs. 252,000 in flagged transfers. The highest-risk finding scored 75 (high confidence) and warrants priority review."
+    }
+  },
+  {
+    "id": "c09252b3-8fd1-4a63-b896-729fc17a75d8",
+    "type": "investigation_run",
+    "scenario_id": "upload-471cac09",
+    "timestamp": "2026-06-21T05:46:19.168602+00:00",
+    "summary": "Investigation run on 'upload-471cac09': 2 pattern(s) confirmed (unclassified_anomaly), 0 overturned by adversarial review.",
+    "details": {
+      "account_count": 30,
+      "transaction_count": 50,
+      "patterns_confirmed": 2,
+      "patterns_overturned": 0,
+      "pattern_types": [
+        "unclassified_anomaly"
+      ],
+      "highest_risk_score": 75,
+      "elapsed_seconds": 115.0,
+      "executive_summary": "This investigation identified 2 confirmed pattern(s) (unclassified anomaly) involving 11 accounts and Rs. 675,443 in flagged transfers. The highest-risk finding scored 75 (high confidence) and warrants priority review."
+    }
+  },
+  {
+    "id": "5610e7aa-00c6-46a0-a2cc-ba3ea1c3bf54",
+    "type": "investigation_run",
+    "scenario_id": "structuring",
+    "timestamp": "2026-06-21T05:50:18.485965+00:00",
+    "summary": "Investigation run on 'structuring': 1 pattern(s) confirmed (structuring), 0 overturned by adversarial review.",
+    "details": {
+      "account_count": 23,
+      "transaction_count": 30,
+      "patterns_confirmed": 1,
+      "patterns_overturned": 0,
+      "pattern_types": [
+        "structuring"
+      ],
+      "highest_risk_score": 78,
+      "elapsed_seconds": 101.5,
+      "executive_summary": "This investigation identified 1 confirmed pattern(s) (structuring) involving 7 accounts and Rs. 252,000 in flagged transfers. The highest-risk finding scored 78 (high confidence) and warrants priority review."
+    }
+  },
+  {
+    "id": "79aacbf9-6836-47d1-8beb-b0df875858d7",
+    "type": "investigation_run",
+    "scenario_id": "upload-b37c06e0",
+    "timestamp": "2026-06-21T05:52:12.324188+00:00",
+    "summary": "Investigation run on 'upload-b37c06e0': 5 pattern(s) confirmed (layering, mule_network, structuring), 1 overturned by adversarial review.",
+    "details": {
+      "account_count": 113,
+      "transaction_count": 248,
+      "patterns_confirmed": 5,
+      "patterns_overturned": 1,
+      "pattern_types": [
+        "layering",
+        "mule_network",
+        "structuring"
+      ],
+      "highest_risk_score": 69,
+      "elapsed_seconds": 101.9,
+      "executive_summary": "This investigation identified 5 confirmed pattern(s) (layering, mule network, structuring) involving 27 accounts and Rs. 1,002,915 in flagged transfers. The highest-risk finding scored 69 (medium confidence) and warrants priority review."
+    }
+  },
+  {
+    "id": "a5002403-abab-4f81-8c24-fd15b341d98d",
+    "type": "investigation_run",
+    "scenario_id": "upload-471cac09",
+    "timestamp": "2026-06-21T05:55:49.321776+00:00",
+    "summary": "Investigation run on 'upload-471cac09': 0 pattern(s) confirmed (none), 0 overturned by adversarial review.",
+    "details": {
+      "account_count": 30,
+      "transaction_count": 50,
+      "patterns_confirmed": 0,
+      "patterns_overturned": 0,
+      "pattern_types": [],
+      "highest_risk_score": null,
+      "elapsed_seconds": 59.5,
+      "executive_summary": "No suspicious patterns were confirmed in this investigation."
+    }
+  }
+]

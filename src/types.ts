@@ -23,6 +23,7 @@ export interface AccountNode {
   riskScore?: number | null;
   confidence?: ConfidenceLevel | null;
   flags: PatternType[];
+  watchlistNote?: string | null;
 }
 
 export interface TransactionEdge {
@@ -45,6 +46,10 @@ export interface FlaggedPattern {
   confidence: ConfidenceLevel;
   narrative: string;
   additionalNotes?: string | null;
+  skepticChallenge?: string | null;
+  reviewVerdict?: string | null;
+  nextSteps?: string[];
+  similarPastCases?: string[];
 }
 
 export interface InvestigationGraph {
@@ -55,7 +60,7 @@ export interface InvestigationGraph {
 }
 
 export interface StageStatus {
-  key: "ingestion" | "detection" | "scoring" | "narrative";
+  key: "ingestion" | "watchlist" | "detection" | "adversarial" | "scoring" | "memory" | "narrative";
   label: string;
   status: "idle" | "running" | "done";
   detail: string;
@@ -69,4 +74,18 @@ export interface InvestigationResult {
   generatedAt: string;
   elapsedMs: number;
   usedMockData?: boolean;
+}
+
+export interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
+export interface AuditEntry {
+  id: string;
+  type: "investigation_run" | "chat_message";
+  scenarioId: string;
+  timestamp: string;
+  summary: string;
+  details: Record<string, unknown>;
 }

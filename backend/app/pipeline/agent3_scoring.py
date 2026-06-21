@@ -15,10 +15,16 @@ SYSTEM_PROMPT = (
     "2. Write a 2-4 sentence plain-language narrative explaining what happened and why "
     "it's suspicious, in the style of an experienced fraud investigator's case note. Be "
     "specific about amounts, account counts, and timing where available. Do not invent "
-    "details not present in the input. "
+    "details not present in the input. All monetary amounts in this data are in Indian "
+    "Rupees - always write them as 'Rs. <amount>', never '$' or 'USD'. "
+    "3. Propose 2-3 concrete next investigative steps an analyst should take on this "
+    "specific case (e.g. pull KYC for a named account, check a named account against "
+    "prior cases, verify source of funds) - specific to the accounts given, not generic "
+    "advice. "
     "Respond with strict JSON only: "
     '{"risk_score": <int 0-100>, "confidence": "low"|"medium"|"high", '
-    '"contributing_factors": ["factor: explanation", ...], "narrative": "2-4 sentences"}'
+    '"contributing_factors": ["factor: explanation", ...], "narrative": "2-4 sentences", '
+    '"next_steps": ["...", "..."]}'
 )
 
 
@@ -69,6 +75,15 @@ def _fallback_narrative(pattern: FlaggedPattern, txs: list[Transaction]) -> str:
     ).strip()
 
 
+def _fallback_next_steps(pattern: FlaggedPattern) -> list[str]:
+    primary = pattern.accounts_involved[0] if pattern.accounts_involved else "the flagged account"
+    return [
+        f"Pull KYC and source-of-funds documentation for {primary}.",
+        f"Check whether any of {', '.join(pattern.accounts_involved)} appear in prior SAR filings.",
+        "Verify counterparty relationships for unusually large or rapid transfers in this cluster.",
+    ]
+
+
 def _fallback_score_and_narrative(pattern: FlaggedPattern, factors: dict, txs: list[Transaction]) -> dict:
     score = min(100, int(factors["network_density"] * 8 + factors["velocity_tx_per_hour"] * 10 + 20))
     confidence = "high" if score >= 70 else "medium" if score >= 40 else "low"
@@ -80,6 +95,7 @@ def _fallback_score_and_narrative(pattern: FlaggedPattern, factors: dict, txs: l
             f"velocity: {factors['velocity_tx_per_hour']} tx/hour",
         ],
         "narrative": _fallback_narrative(pattern, txs),
+        "next_steps": _fallback_next_steps(pattern),
     }
 
 
@@ -91,6 +107,8 @@ async def _score_and_narrate_one(
         result = await call_llm(SYSTEM_PROMPT, f"risk_factors: {factors}")
         if not result.get("narrative"):
             result["narrative"] = _fallback_narrative(pattern, txs)
+        if not result.get("next_steps"):
+            result["next_steps"] = _fallback_next_steps(pattern)
         return result
     except Exception:
         return _fallback_score_and_narrative(pattern, factors, txs)
@@ -112,6 +130,7 @@ async def score_patterns(graph: InvestigationGraph, patterns: list[FlaggedPatter
         pattern.confidence = result.get("confidence", "low")
         pattern.contributing_factors = result.get("contributing_factors", [])
         pattern.narrative = result.get("narrative", "")
+        pattern.next_steps = result.get("next_steps", [])
 
         for account_id in pattern.accounts_involved:
             account = accounts_index.get(account_id)

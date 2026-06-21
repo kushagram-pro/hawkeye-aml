@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { AuditTrail } from "./components/AuditTrail";
+import { ChatPanel } from "./components/ChatPanel";
 import { InvestigationGraph } from "./components/InvestigationGraph";
 import { InsightPanel } from "./components/InsightPanel";
 import { PipelineStages } from "./components/PipelineStages";
@@ -10,9 +12,12 @@ import { InvestigationResult, Scenario, StageStatus } from "./types";
 
 const initialStages: StageStatus[] = [
   { key: "ingestion", label: "Agent 1: Ingestion", status: "idle", detail: "Waiting for a scenario run." },
+  { key: "watchlist", label: "Agent 1B: Watchlist Screening", status: "idle", detail: "Repeat-offender lookup not started." },
   { key: "detection", label: "Agent 2: Pattern Detection", status: "idle", detail: "Rule and reasoning stage not started." },
+  { key: "adversarial", label: "Agent 2B: Adversarial Review", status: "idle", detail: "Skeptical second pass not started." },
   { key: "scoring", label: "Agent 3: Risk Scoring", status: "idle", detail: "Score factors will appear after investigation." },
-  { key: "narrative", label: "Agent 4: Narrative", status: "idle", detail: "Narratives will be generated after suspicious paths are found." }
+  { key: "memory", label: "Agent 3B: Case Memory", status: "idle", detail: "Precedent lookup not started." },
+  { key: "narrative", label: "Agent 4: Narrative & Next Steps", status: "idle", detail: "Narratives will be generated after suspicious paths are found." }
 ];
 
 interface DashboardProps {
@@ -26,6 +31,7 @@ export function Dashboard({ onLogout }: DashboardProps) {
   const [result, setResult] = useState<InvestigationResult | null>(null);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [stages, setStages] = useState(initialStages.map((stage) => ({ ...stage })));
+  const [auditRefreshToken, setAuditRefreshToken] = useState(0);
 
   useEffect(() => {
     void (async () => {
@@ -59,7 +65,7 @@ export function Dashboard({ onLogout }: DashboardProps) {
     markRunningTimeline();
 
     try {
-      const investigation = await runInvestigation(scenarioId);
+      const investigation = await runInvestigation(scenarioId, setStages);
       setResult(investigation);
       setStages(investigation.stages);
 
@@ -69,6 +75,9 @@ export function Dashboard({ onLogout }: DashboardProps) {
           .sort((left, right) => (right.riskScore ?? 0) - (left.riskScore ?? 0))[0] ?? null;
 
       setSelectedNodeId(topFlaggedAccount?.id ?? null);
+      if (!investigation.usedMockData) {
+        setAuditRefreshToken((current) => current + 1);
+      }
     } finally {
       setLoading(false);
     }
@@ -169,10 +178,19 @@ export function Dashboard({ onLogout }: DashboardProps) {
               reportScenarioId={result && !result.usedMockData ? result.scenario.id : null}
             />
             <PipelineStages stages={result?.stages ?? stages} elapsedMs={result?.elapsedMs} />
+            <AuditTrail
+              scenarioId={result && !result.usedMockData ? result.scenario.id : null}
+              refreshToken={auditRefreshToken}
+            />
           </div>
 
           <div className="side-column">
             <InsightPanel result={result} selectedNodeId={selectedNodeId} />
+            <ChatPanel
+              key={result && !result.usedMockData ? `${result.scenario.id}-${result.generatedAt}` : "none"}
+              scenarioId={result && !result.usedMockData ? result.scenario.id : null}
+              onAsked={() => setAuditRefreshToken((current) => current + 1)}
+            />
           </div>
         </div>
       </main>

@@ -110,6 +110,24 @@ def download_report(scenario_id: str):
         )
         story.append(Paragraph(pattern.narrative or pattern.reasoning, styles["BodyText"]))
         story.append(Paragraph(f"Accounts involved: {', '.join(pattern.accounts_involved)}", styles["BodyText"]))
+
+        if pattern.skeptic_challenge:
+            story.append(Spacer(1, 6))
+            story.append(Paragraph("Adversarial review:", styles["Heading3"]))
+            story.append(Paragraph(pattern.skeptic_challenge, styles["BodyText"]))
+
+        if pattern.next_steps:
+            story.append(Spacer(1, 6))
+            story.append(Paragraph("Recommended next steps:", styles["Heading3"]))
+            for step in pattern.next_steps:
+                story.append(Paragraph(f"• {step}", styles["BodyText"]))
+
+        if pattern.similar_past_cases:
+            story.append(Spacer(1, 6))
+            story.append(Paragraph("Case memory:", styles["Heading3"]))
+            for note in pattern.similar_past_cases:
+                story.append(Paragraph(f"• {note}", styles["BodyText"]))
+
         story.append(Spacer(1, 16))
 
     doc.build(story)

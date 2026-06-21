@@ -1,6 +1,8 @@
 import { mockInvestigationResult, mockScenarios } from "../data/mockData";
 import {
   AccountNode,
+  AuditEntry,
+  ChatMessage,
   ConfidenceLevel,
   FlaggedPattern,
   InvestigationResult,
@@ -118,21 +120,37 @@ export async function fetchScenarios(): Promise<Scenario[]> {
 
 const stageLabelMap: Record<string, string> = {
   ingestion: "Agent 1: Ingestion",
+  watchlist_screening: "Agent 1B: Watchlist Screening",
   pattern_detection: "Agent 2: Pattern Detection",
+  adversarial_review: "Agent 2B: Adversarial Review",
   risk_scoring: "Agent 3: Risk Scoring",
-  narrative: "Agent 4: Narrative"
+  case_memory: "Agent 3B: Case Memory",
+  narrative: "Agent 4: Narrative & Next Steps"
 };
 
-const stageOrder = ["ingestion", "pattern_detection", "risk_scoring", "narrative"] as const;
+const stageKeyMap: Record<string, StageStatus["key"]> = {
+  ingestion: "ingestion",
+  watchlist_screening: "watchlist",
+  pattern_detection: "detection",
+  adversarial_review: "adversarial",
+  risk_scoring: "scoring",
+  case_memory: "memory",
+  narrative: "narrative"
+};
+
+const stageOrder = [
+  "ingestion",
+  "watchlist_screening",
+  "pattern_detection",
+  "adversarial_review",
+  "risk_scoring",
+  "case_memory",
+  "narrative"
+] as const;
 
 function buildInitialStages(): StageStatus[] {
   return stageOrder.map((stage) => ({
-    key:
-      stage === "pattern_detection"
-        ? "detection"
-        : stage === "risk_scoring"
-          ? "scoring"
-          : stage,
+    key: stageKeyMap[stage],
     label: stageLabelMap[stage],
     status: "idle",
     detail: "Waiting for pipeline event..."
@@ -156,12 +174,30 @@ function mapStages(
     let detail = "Stage completed.";
     if (event.stage === "ingestion" && event.data?.account_count) {
       detail = `Normalized ${String(event.data.account_count)} accounts from the selected scenario.`;
+    } else if (event.stage === "watchlist_screening" && event.data?.accounts_flagged !== undefined) {
+      const flaggedCount = Number(event.data.accounts_flagged);
+      detail =
+        flaggedCount > 0
+          ? `${flaggedCount} account(s) matched a high-risk pattern from a past investigation.`
+          : "No accounts matched the repeat-offender watchlist.";
     } else if (event.stage === "pattern_detection" && event.data?.patterns_found !== undefined) {
       detail = `Detected ${String(event.data.patterns_found)} suspicious pattern group(s).`;
+    } else if (event.stage === "adversarial_review" && event.data?.patterns_reviewed !== undefined) {
+      const overturned = Number(event.data.patterns_overturned ?? 0);
+      detail =
+        overturned > 0
+          ? `A skeptical second pass overturned ${overturned} of ${String(event.data.patterns_reviewed)} candidate(s) as likely false positives.`
+          : `A skeptical second pass upheld all ${String(event.data.patterns_reviewed)} candidate(s).`;
     } else if (event.stage === "risk_scoring") {
       detail = "Risk factors and confidence levels have been assigned.";
+    } else if (event.stage === "case_memory" && event.data?.patterns_with_precedent !== undefined) {
+      const matches = Number(event.data.patterns_with_precedent);
+      detail =
+        matches > 0
+          ? `Found precedent for ${matches} pattern(s) in past investigations.`
+          : "No matching precedent found in past investigations.";
     } else if (event.stage === "narrative") {
-      detail = "Narratives generated for the suspicious accounts and pattern clusters.";
+      detail = "Narratives and next-step recommendations generated for the suspicious account clusters.";
     } else if (event.status === "started") {
       detail = "Stage is currently running...";
     }
@@ -186,6 +222,7 @@ function normalizeAccount(account: {
   risk_score?: number | null;
   confidence?: ConfidenceLevel | null;
   flags: PatternType[];
+  watchlist_note?: string | null;
 }): AccountNode {
   return {
     id: account.id,
@@ -196,7 +233,8 @@ function normalizeAccount(account: {
     uniqueCounterparties: account.unique_counterparties,
     riskScore: account.risk_score ?? null,
     confidence: account.confidence ?? null,
-    flags: account.flags ?? []
+    flags: account.flags ?? [],
+    watchlistNote: account.watchlist_note ?? null
   };
 }
 
@@ -209,6 +247,10 @@ function normalizePattern(
     narrative: string;
     reasoning?: string;
     additional_notes?: string | null;
+    skeptic_challenge?: string | null;
+    review_verdict?: string | null;
+    next_steps?: string[];
+    similar_past_cases?: string[];
   },
   index: number
 ): FlaggedPattern {
@@ -220,7 +262,11 @@ function normalizePattern(
     riskScore: pattern.risk_score,
     confidence: pattern.confidence,
     narrative: pattern.narrative || pattern.reasoning || "Suspicious activity was detected in this account cluster.",
-    additionalNotes: pattern.additional_notes ?? null
+    additionalNotes: pattern.additional_notes ?? null,
+    skepticChallenge: pattern.skeptic_challenge ?? null,
+    reviewVerdict: pattern.review_verdict ?? null,
+    nextSteps: pattern.next_steps ?? [],
+    similarPastCases: pattern.similar_past_cases ?? []
   };
 }
 
@@ -235,6 +281,7 @@ function normalizeGraph(rawGraph: {
     risk_score?: number | null;
     confidence?: ConfidenceLevel | null;
     flags: PatternType[];
+    watchlist_note?: string | null;
   }>;
   transactions: Array<{
     from_account: string;
@@ -251,6 +298,10 @@ function normalizeGraph(rawGraph: {
     narrative: string;
     reasoning?: string;
     additional_notes?: string | null;
+    skeptic_challenge?: string | null;
+    review_verdict?: string | null;
+    next_steps?: string[];
+    similar_past_cases?: string[];
   }>;
   executive_summary?: string | null;
 }): InvestigationGraph {
@@ -447,4 +498,42 @@ export async function downloadReport(scenarioId: string): Promise<void> {
   link.click();
   link.remove();
   URL.revokeObjectURL(url);
+}
+
+export async function askAboutCase(
+  scenarioId: string,
+  question: string,
+  history: ChatMessage[]
+): Promise<string> {
+  const data = await request<{ answer: string }>(`/investigate/${scenarioId}/ask`, {
+    method: "POST",
+    body: JSON.stringify({ question, history })
+  });
+  return data.answer;
+}
+
+export async function fetchAuditLog(scenarioId: string): Promise<AuditEntry[]> {
+  try {
+    const entries = await request<
+      Array<{
+        id: string;
+        type: "investigation_run" | "chat_message";
+        scenario_id: string;
+        timestamp: string;
+        summary: string;
+        details: Record<string, unknown>;
+      }>
+    >(`/investigate/${scenarioId}/audit`);
+
+    return entries.map((entry) => ({
+      id: entry.id,
+      type: entry.type,
+      scenarioId: entry.scenario_id,
+      timestamp: entry.timestamp,
+      summary: entry.summary,
+      details: entry.details
+    }));
+  } catch {
+    return [];
+  }
 }

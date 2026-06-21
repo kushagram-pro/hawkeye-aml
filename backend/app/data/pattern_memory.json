@@ -1,0 +1,224 @@
+[
+  {
+    "scenario_id": "mule_network",
+    "pattern_type": "mule_network",
+    "accounts_involved": [
+      "ACC501",
+      "ACC602",
+      "ACC603",
+      "ACC606",
+      "ACC605",
+      "ACC604",
+      "ACC601"
+    ],
+    "risk_score": 85,
+    "confidence": "high",
+    "reasoning": "The transactions show a single account (ACC501) sending funds to multiple accounts (ACC601, ACC602, ACC603, ACC604, ACC605, ACC606), which is characteristic of a mule network pattern."
+  },
+  {
+    "scenario_id": "upload-69d79f2a",
+    "pattern_type": "circular_flow",
+    "accounts_involved": [
+      "ACC3005",
+      "ACC3010",
+      "ACC3020",
+      "ACC3030"
+    ],
+    "risk_score": 100,
+    "confidence": "high",
+    "reasoning": "The transactions form a clear loop where funds are sent from one account to the next in sequence and then back to the original sender, which is characteristic of a circular flow pattern."
+  },
+  {
+    "scenario_id": "upload-69d79f2a",
+    "pattern_type": "layering",
+    "accounts_involved": [
+      "ACC1201",
+      "ACC1301",
+      "ACC1401",
+      "ACC1501",
+      "ACC1601",
+      "ACC1701"
+    ],
+    "risk_score": 85,
+    "confidence": "high",
+    "reasoning": "The transactions show a clear one-way flow of funds through a series of intermediary accounts (ACC1301 to ACC1701), which is characteristic of layering."
+  },
+  {
+    "scenario_id": "upload-69d79f2a",
+    "pattern_type": "layering",
+    "accounts_involved": [
+      "ACC1001",
+      "ACC2001",
+      "ACC3001",
+      "ACC4001",
+      "ACC5001",
+      "ACC6001"
+    ],
+    "risk_score": 85,
+    "confidence": "high",
+    "reasoning": "The transactions show a clear one-way flow of funds from ACC1001 to ACC6001 through intermediary accounts, which is characteristic of layering."
+  },
+  {
+    "scenario_id": "upload-69d79f2a",
+    "pattern_type": "layering",
+    "accounts_involved": [
+      "ACC4005",
+      "ACC5005",
+      "ACC6005",
+      "ACC7005",
+      "ACC8005",
+      "ACC9005"
+    ],
+    "risk_score": 83,
+    "confidence": "high",
+    "reasoning": "The transactions show a clear one-way flow from ACC4005 to ACC9005 through a series of intermediary accounts, which matches the pattern_type layering."
+  },
+  {
+    "scenario_id": "layering",
+    "pattern_type": "layering",
+    "accounts_involved": [
+      "ACC401",
+      "ACC402",
+      "ACC403",
+      "ACC404",
+      "ACC405",
+      "ACC406"
+    ],
+    "risk_score": 75,
+    "confidence": "high",
+    "reasoning": "The transactions follow a clear chain where each account transfers funds to the next in sequence, reducing the amount transferred at each step, which is characteristic of layering."
+  },
+  {
+    "scenario_id": "upload-b37c06e0",
+    "pattern_type": "structuring",
+    "accounts_involved": [
+      "BENEFIT-04",
+      "MULE-10",
+      "MULE-13",
+      "MULE-21",
+      "MULE-25"
+    ],
+    "risk_score": 78,
+    "confidence": "high",
+    "reasoning": "The transactions show multiple smaller transfers converging into one account (BENEFIT-04), which aligns with the structuring pattern type."
+  },
+  {
+    "scenario_id": "upload-471cac09",
+    "pattern_type": "unclassified_anomaly",
+    "accounts_involved": [
+      "ACC-002",
+      "ACC-003",
+      "ACC-004",
+      "ACC-006",
+      "ACC-014",
+      "ACC-016",
+      "ACC-024"
+    ],
+    "risk_score": 75,
+    "confidence": "high",
+    "reasoning": "The account has a high velocity of transactions (high velocity_zscore) with varying amounts and diverse counterparty accounts, which is unusual for legitimate activities like payroll or merchant payments. The absence of passthrough_ratio or round_amount_ratio suggests these typical indicators of structuring or layering are not present."
+  },
+  {
+    "scenario_id": "upload-471cac09",
+    "pattern_type": "unclassified_anomaly",
+    "accounts_involved": [
+      "ACC-003",
+      "ACC-020",
+      "ACC-026",
+      "ACC-028",
+      "ACC-030"
+    ],
+    "risk_score": 60,
+    "confidence": "medium",
+    "reasoning": "The transaction activity does not strongly indicate fraudulent behavior. However, the round_amount_ratio is zero and there are multiple transactions between ACC-028 and other accounts without a clear pattern or sequence that could be explained by legitimate business activities such as payroll, merchant, or aggregator operations. This lack of correlation with known patterns makes it unusual."
+  },
+  {
+    "scenario_id": "structuring",
+    "pattern_type": "structuring",
+    "accounts_involved": [
+      "ACC301",
+      "ACC101",
+      "ACC102",
+      "ACC103",
+      "ACC104",
+      "ACC105",
+      "ACC106"
+    ],
+    "risk_score": 78,
+    "confidence": "high",
+    "reasoning": "Rule engine flagged a structuring pattern (LLM unavailable)."
+  },
+  {
+    "scenario_id": "upload-b37c06e0",
+    "pattern_type": "structuring",
+    "accounts_involved": [
+      "LAYER1-15",
+      "PLACE-06",
+      "PLACE-07",
+      "PLACE-09",
+      "PLACE-14",
+      "PLACE-15"
+    ],
+    "risk_score": 69,
+    "confidence": "medium",
+    "reasoning": "Rule engine flagged a structuring pattern (LLM unavailable)."
+  },
+  {
+    "scenario_id": "upload-b37c06e0",
+    "pattern_type": "structuring",
+    "accounts_involved": [
+      "MULE-17",
+      "LAYER2-07",
+      "LAYER2-08",
+      "LAYER2-12",
+      "LAYER2-13",
+      "LAYER2-20"
+    ],
+    "risk_score": 69,
+    "confidence": "medium",
+    "reasoning": "Rule engine flagged a structuring pattern (LLM unavailable)."
+  },
+  {
+    "scenario_id": "upload-b37c06e0",
+    "pattern_type": "mule_network",
+    "accounts_involved": [
+      "NOISE-04",
+      "NOISE-01",
+      "NOISE-13",
+      "NOISE-21",
+      "NOISE-06",
+      "NOISE-02"
+    ],
+    "risk_score": 68,
+    "confidence": "medium",
+    "reasoning": "Rule engine flagged a mule_network pattern (LLM unavailable)."
+  },
+  {
+    "scenario_id": "upload-b37c06e0",
+    "pattern_type": "structuring",
+    "accounts_involved": [
+      "LAYER2-05",
+      "LAYER1-02",
+      "LAYER1-15",
+      "LAYER1-19",
+      "LAYER1-20"
+    ],
+    "risk_score": 61,
+    "confidence": "medium",
+    "reasoning": "The transactions involve multiple accounts ('LAYER1-02', 'LAYER1-15', 'LAYER1-19', 'LAYER1-20') transferring funds to a single account ('LAYER2-05'), which is indicative of the structuring pattern."
+  },
+  {
+    "scenario_id": "upload-b37c06e0",
+    "pattern_type": "layering",
+    "accounts_involved": [
+      "PLACE-05",
+      "LAYER1-12",
+      "LAYER2-03",
+      "MULE-15",
+      "BENEFIT-02"
+    ],
+    "risk_score": 60,
+    "confidence": "medium",
+    "reasoning": "Rule engine flagged a layering pattern (LLM unavailable)."
+  }
+]

@@ -1,3 +1,4 @@
+import asyncio
 import json
 import os
 
@@ -7,6 +8,9 @@ OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434/api/generate")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:7b-instruct")
 CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-6")
 PROVIDER = os.getenv("LLM_PROVIDER", "ollama")
+LLM_CONNECT_TIMEOUT_SECONDS = float(os.getenv("LLM_CONNECT_TIMEOUT_SECONDS", "5"))
+LLM_READ_TIMEOUT_SECONDS = float(os.getenv("LLM_READ_TIMEOUT_SECONDS", "25"))
+LLM_STAGE_TIMEOUT_SECONDS = float(os.getenv("LLM_STAGE_TIMEOUT_SECONDS", "30"))
 
 
 def _extract_json(text: str) -> dict:
@@ -24,8 +28,18 @@ async def _call_ollama(system_prompt: str, user_prompt: str) -> dict:
         "prompt": f"{system_prompt}\n\n{user_prompt}",
         "stream": False,
         "format": "json",
+        # Every prompt in this app asks for a short JSON object (a few sentences
+        # plus a handful of list items) - capping output tokens bounds worst-case
+        # CPU generation time per call without truncating any real response.
+        "options": {"num_predict": 350},
     }
-    async with httpx.AsyncClient(timeout=60.0) as client:
+    timeout = httpx.Timeout(
+        connect=LLM_CONNECT_TIMEOUT_SECONDS,
+        read=LLM_READ_TIMEOUT_SECONDS,
+        write=LLM_CONNECT_TIMEOUT_SECONDS,
+        pool=LLM_CONNECT_TIMEOUT_SECONDS,
+    )
+    async with httpx.AsyncClient(timeout=timeout) as client:
         resp = await client.post(OLLAMA_URL, json=payload)
         resp.raise_for_status()
         body = resp.json()
@@ -35,7 +49,7 @@ async def _call_ollama(system_prompt: str, user_prompt: str) -> dict:
 async def _call_claude(system_prompt: str, user_prompt: str) -> dict:
     import anthropic
 
-    client = anthropic.AsyncAnthropic()
+    client = anthropic.AsyncAnthropic(timeout=LLM_READ_TIMEOUT_SECONDS)
     resp = await client.messages.create(
         model=CLAUDE_MODEL,
         max_tokens=1024,
@@ -46,6 +60,7 @@ async def _call_claude(system_prompt: str, user_prompt: str) -> dict:
 
 
 async def call_llm(system_prompt: str, user_prompt: str) -> dict:
-    if PROVIDER == "claude":
-        return await _call_claude(system_prompt, user_prompt)
-    return await _call_ollama(system_prompt, user_prompt)
+    async with asyncio.timeout(LLM_STAGE_TIMEOUT_SECONDS):
+        if PROVIDER == "claude":
+            return await _call_claude(system_prompt, user_prompt)
+        return await _call_ollama(system_prompt, user_prompt)

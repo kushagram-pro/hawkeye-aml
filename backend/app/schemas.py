@@ -27,6 +27,7 @@ class Account(BaseModel):
     risk_score: Optional[int] = None
     confidence: Optional[Confidence] = None
     flags: list[str] = []
+    watchlist_note: Optional[str] = None
 
 
 class FlaggedPattern(BaseModel):
@@ -38,6 +39,10 @@ class FlaggedPattern(BaseModel):
     reasoning: str = ""
     narrative: str = ""
     additional_notes: Optional[str] = None
+    skeptic_challenge: Optional[str] = None
+    review_verdict: Optional[str] = None
+    next_steps: list[str] = []
+    similar_past_cases: list[str] = []
 
 
 class InvestigationGraph(BaseModel):
@@ -60,3 +65,26 @@ class ScenarioMeta(BaseModel):
     description: str
     transaction_count: int
     deletable: bool = False
+
+
+class ChatMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str
+
+
+class ChatRequest(BaseModel):
+    question: str
+    history: list[ChatMessage] = []
+
+
+class ChatResponse(BaseModel):
+    answer: str
+
+
+class AuditEntry(BaseModel):
+    id: str
+    type: Literal["investigation_run", "chat_message"]
+    scenario_id: str
+    timestamp: str
+    summary: str
+    details: dict
