@@ -4,8 +4,9 @@ HawkEye AML is a demo-grade anti-money-laundering investigation platform. It tur
 
 - a login-gated analyst dashboard
 - a force-directed money trail graph
-- a four-stage investigation pipeline
-- pattern detection, risk scoring, narrative generation, and executive summary output
+- a staged multi-agent investigation pipeline with live progress updates
+- watchlist screening, pattern detection, adversarial review, risk scoring, case memory, and narrative output
+- analyst chat, audit trail history, and PDF report export
 - graceful fallback behavior when the LLM or backend is unavailable
 
 The project is built as a split frontend/backend app:
@@ -20,17 +21,22 @@ The app is designed to help an analyst:
 1. Sign in with demo credentials.
 2. Pick a scenario or upload a custom transaction file.
 3. Run the investigation pipeline.
-4. Review suspicious accounts, flagged patterns, and plain-language explanations.
-5. Download a PDF report for completed investigations.
+4. Review suspicious accounts, flagged patterns, watchlist hits, and plain-language explanations.
+5. Inspect prior-case matches, adversarial review notes, and an executive summary.
+6. Ask follow-up questions in the case chat assistant and review the audit trail.
+7. Download a PDF report for completed investigations.
 
-The backend pipeline follows four visible stages:
+The backend pipeline follows these visible stages:
 
 - ingestion
+- watchlist screening
 - pattern detection
+- adversarial review
 - risk scoring
+- case memory
 - narrative generation
 
-An optional executive summary is generated after the pipeline completes.
+An executive summary is generated after the pipeline completes.
 
 ## Repository Layout
 
@@ -58,9 +64,14 @@ An optional executive summary is generated after the pipeline completes.
 - Scenario picker for seeded AML typologies
 - CSV or JSON upload support for custom investigations
 - Streaming pipeline progress over SSE
+- Watchlist screening for repeat-offender or prior-case matches
 - Interactive graph visualization of accounts and transfers
 - Risk-ranked suspicious accounts and patterns
-- Auto-generated investigator narrative and executive summary
+- Adversarial second-pass review to challenge false positives
+- Case memory that links current findings to similar historical patterns
+- Auto-generated investigator narrative, next steps, and executive summary
+- In-case analyst chat grounded in the completed investigation result
+- Persistent audit trail for investigation runs and analyst questions
 - PDF report export for completed runs
 
 ## Tech Stack
@@ -68,6 +79,7 @@ An optional executive summary is generated after the pipeline completes.
 - Frontend: React, TypeScript, Vite
 - Visualization: `react-force-graph-2d`
 - Backend: FastAPI, Pydantic
+- Runtime orchestration: async Python pipeline with SSE streaming
 - Reporting: ReportLab, NetworkX, Matplotlib
 
 ## Getting Started
@@ -129,9 +141,12 @@ These can be overridden with environment variables:
 The backend supports a deterministic fallback flow so the demo can still run if the LLM is unavailable:
 
 - rule-based detection still identifies suspicious patterns
+- watchlist screening and case memory still operate from local data
+- adversarial review falls back to keeping the original confirmed pattern
 - fallback scoring assigns risk and confidence
 - fallback narratives explain the finding in plain language
 - cached investigation results can be used if a live run fails or times out
+- LLM calls are time-bounded so the full pipeline can degrade gracefully instead of hanging
 
 ### LLM provider
 
@@ -146,6 +161,14 @@ ANTHROPIC_API_KEY=your_key_here
 
 If the LLM cannot be reached, the pipeline falls back to deterministic output and still completes.
 
+### Runtime guardrails
+
+The investigation pipeline is designed to stay demo-friendly:
+
+- individual LLM calls are bounded by short per-call timeouts
+- the full pipeline has a hard runtime cap and falls back to cached or deterministic output if needed
+- the backend still returns explainable results even when a live reasoning pass is unavailable
+
 ## API Overview
 
 - `GET /health` - health check
@@ -155,6 +178,8 @@ If the LLM cannot be reached, the pipeline falls back to deterministic output an
 - `DELETE /scenarios/{id}` - delete an uploaded scenario
 - `POST /investigate/{id}` - stream pipeline events over SSE
 - `GET /investigate/{id}/result` - fetch the last completed result
+- `POST /investigate/{id}/ask` - ask grounded follow-up questions about a completed case
+- `GET /investigate/{id}/audit` - fetch the investigation and chat audit trail
 - `GET /investigate/{id}/report.pdf` - download a PDF report
 
 ## Scenario Data
@@ -191,6 +216,7 @@ Accepted upload formats:
 
 - The frontend is designed to keep working even if the backend is cold, by falling back to mock data.
 - Investigation results are stored in memory on the backend and are lost on restart.
+- Audit trail and pattern memory are persisted to local JSON files under `backend/app/data/`.
 - The PDF report endpoint only works after a scenario has completed an investigation run.
 
 ## Useful Commands
